@@ -10,7 +10,7 @@
 
 	<properties>
 		<spring.version>4.2.1.RELEASE</spring.version>
-		<spring-data.version>Gosling-RELEASE</spring-data.version>
+		<spring-data.version>Ingalls-BUILD-SNAPSHOT</spring-data.version>
 	</properties>
 
 	<dependencyManagement>
