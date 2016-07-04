@@ -12,6 +12,15 @@
 	</parent>
 
 	<name>Spring Data Cassandra - Example</name>
-	<description>Small sample project showing the usage of Spring Data Cassandra.</description>
-	
+	<description>Basic sample project showing the usage of Spring Data Cassandra.</description>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+	</dependencies>
+
 </project>

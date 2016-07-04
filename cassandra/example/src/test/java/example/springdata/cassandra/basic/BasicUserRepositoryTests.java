@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.springdata.cassandra;
+package example.springdata.cassandra.basic;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-
-import example.springdata.cassandra.SimpleConfiguration;
-import example.springdata.cassandra.SimpleUserRepository;
-import example.springdata.cassandra.User;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -31,7 +27,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * Integration test showing the basic usage of {@link SimpleUserRepository}.
+ * Integration test showing the basic usage of {@link BasicUserRepository}.
  * 
  * @author Oliver Gierke
  * @author Thomas Darimont
@@ -39,10 +35,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SimpleConfiguration.class)
-public class SimpleUserRepositoryTests {
+@ContextConfiguration(classes = BasicConfiguration.class)
+public class BasicUserRepositoryTests {
 
-	@Autowired SimpleUserRepository repository;
+	@Autowired BasicUserRepository repository;
 	User user;
 
 	@Before
