@@ -17,6 +17,7 @@
 	<inceptionYear>2014</inceptionYear>
 
 	<modules>
+		<module>util</module>
 		<module>example</module>
 		<module>java8</module>
 	</modules>

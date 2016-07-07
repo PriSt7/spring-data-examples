@@ -15,6 +15,7 @@
  */
 package example.springdata.cassandra.basic;
 
+import example.springdata.cassandra.util.RequiresCassandraKeyspace;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BasicConfiguration.CassandraConfig.class)
 public class CassandraOperationsIntegrationTests {
+
+	@ClassRule
+	public final static RequiresCassandraKeyspace CASSANDRA_KEYSPACE = RequiresCassandraKeyspace.onLocalhost();
 
 	@Autowired CassandraOperations template;
 

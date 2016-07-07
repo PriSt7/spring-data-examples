@@ -15,11 +15,13 @@
  */
 package example.springdata.cassandra.basic;
 
+import example.springdata.cassandra.util.RequiresCassandraKeyspace;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.Assume.*;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,9 @@ import example.springdata.cassandra.util.CassandraVersion;
 public class BasicUserRepositoryTests {
 
 	public final static Version CASSANDRA_3_4 = Version.parse("3.4");
+
+	@ClassRule
+	public final static RequiresCassandraKeyspace CASSANDRA_KEYSPACE = RequiresCassandraKeyspace.onLocalhost();
 
 	@Autowired BasicUserRepository repository;
 	@Autowired Session session;

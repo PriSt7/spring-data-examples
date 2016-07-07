@@ -15,12 +15,14 @@
  */
 package example.springdata.cassandra.projection;
 
+import example.springdata.cassandra.util.RequiresCassandraKeyspace;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.Collection;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ProjectionConfiguration.class)
 public class CustomerRepositoryIntegrationTest {
+
+	@ClassRule
+	public final static RequiresCassandraKeyspace CASSANDRA_KEYSPACE = RequiresCassandraKeyspace.onLocalhost();
 
 	@Autowired CustomerRepository customers;
 

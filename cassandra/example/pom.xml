@@ -17,6 +17,13 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-data-cassandra-example-utils</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>

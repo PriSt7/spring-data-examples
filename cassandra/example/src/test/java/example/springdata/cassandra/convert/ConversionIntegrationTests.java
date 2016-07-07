@@ -15,12 +15,14 @@
  */
 package example.springdata.cassandra.convert;
 
+import example.springdata.cassandra.util.RequiresCassandraKeyspace;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ConverterConfiguration.class)
 public class ConversionIntegrationTests {
+
+	@ClassRule
+	public final static RequiresCassandraKeyspace CASSANDRA_KEYSPACE = RequiresCassandraKeyspace.onLocalhost();
 
 	@Autowired CassandraOperations operations;
 

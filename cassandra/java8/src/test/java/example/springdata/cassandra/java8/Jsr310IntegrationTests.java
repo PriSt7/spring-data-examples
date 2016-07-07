@@ -15,6 +15,7 @@
  */
 package example.springdata.cassandra.java8;
 
+import example.springdata.cassandra.util.RequiresCassandraKeyspace;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -22,11 +23,13 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.util.Version;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -40,6 +43,9 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CassandraConfiguration.class)
 public class Jsr310IntegrationTests {
+
+	@ClassRule
+	public final static RequiresCassandraKeyspace CASSANDRA_KEYSPACE = RequiresCassandraKeyspace.onLocalhost().atLeast(Version.parse("3.0"));
 
 	@Autowired OrderRepository repository;
 

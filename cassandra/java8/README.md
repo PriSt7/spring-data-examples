@@ -32,17 +32,5 @@ More details can be found here: https://wiki.apache.org/cassandra/GettingStarted
 /usr/local/bin/cassandra -f 
 ```
 
-### Start a Cassandra shell cqlsh
-```
-/usr/local/bin/cqlsh
-```
-
-### Setup Keyspace
-
-```
-CREATE KEYSPACE example
-WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
-```
-
 That should be enough to get you started.
 Now you can simply type ```mvn clean install``` to run the example.
