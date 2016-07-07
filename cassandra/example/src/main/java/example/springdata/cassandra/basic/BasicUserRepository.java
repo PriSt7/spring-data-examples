@@ -15,6 +15,9 @@
  */
 package example.springdata.cassandra.basic;
 
+import java.util.List;
+
+import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -23,4 +26,13 @@ import org.springframework.data.repository.CrudRepository;
  * 
  * @author Thomas Darimont
  */
-public interface BasicUserRepository extends CrudRepository<User, Long> {}
+public interface BasicUserRepository extends CrudRepository<User, Long> {
+
+	@Query("SELECT * from users where user_id in(?0)")
+	User findUserByIdIn(long id);
+
+	User findUserByUsername(String id);
+
+	List<User> findUsersByLastnameStartsWith(String firstnamePrefix);
+
+}

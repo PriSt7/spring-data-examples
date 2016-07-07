@@ -36,7 +36,7 @@ public interface OrderRepository extends Repository<Order, String> {
 	Order findOrderByOrderDateAndZoneId(LocalDate orderDate, ZoneId zoneId);
 
 	/**
-	 * Parameter conversion can be overriden by using the {@link CassandraType} annotation.
+	 * Parameter conversion can be overridden by using the {@link CassandraType} annotation.
 	 */
 	@Query("SELECT * from pizza_orders WHERE orderdate = ?0 and zoneid = ?1 ALLOW FILTERING")
 	Order findOrderByDate(com.datastax.driver.core.LocalDate orderDate, String zoneId);

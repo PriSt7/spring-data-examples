@@ -17,13 +17,19 @@ package example.springdata.cassandra.basic;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.util.Version;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.datastax.driver.core.Session;
+
+import example.springdata.cassandra.util.CassandraVersion;
 
 /**
  * Integration test showing the basic usage of {@link BasicUserRepository}.
@@ -31,12 +37,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Oliver Gierke
  * @author Thomas Darimont
  * @author Christoph Strobl
+ * @author Mark Paluch
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BasicConfiguration.class)
 public class BasicUserRepositoryTests {
 
+	public final static Version CASSANDRA_3_4 = Version.parse("3.4");
+
 	@Autowired BasicUserRepository repository;
+	@Autowired Session session;
 	User user;
 
 	@Before
@@ -49,11 +59,54 @@ public class BasicUserRepositoryTests {
 		user.setLastname("lastname");
 	}
 
+	/**
+	 * Saving an object using the Cassandra Repository will create a persistent representation of the object in Cassandra.
+	 */
 	@Test
 	public void findSavedUserById() {
 
 		user = repository.save(user);
 
 		assertThat(repository.findOne(user.getId()), is(user));
+	}
+
+	/**
+	 * Cassandra can be queries by using query methods annotated with {@link @Query}.
+	 */
+	@Test
+	public void findByAnnotatedQueryMethod() {
+
+		repository.save(user);
+
+		assertThat(repository.findUserByIdIn(1000), is(nullValue()));
+		assertThat(repository.findUserByIdIn(42), is(equalTo(user)));
+	}
+
+	/**
+	 * Spring Data Cassandra supports query derivation so annotating query methods with
+	 * {@link org.springframework.data.cassandra.repository.Query} is optional. Querying columns other than the primary
+	 * key requires a secondary index.
+	 */
+	@Test
+	public void findByDerivedQueryMethod() {
+
+		session.execute("CREATE INDEX IF NOT EXISTS user_username ON users (uname);");
+		repository.save(user);
+
+		assertThat(repository.findUserByUsername(user.getUsername()), is(user));
+	}
+
+	/**
+	 * Spring Data Cassandra supports {@code LIKE} and {@code CONTAINS} query keywords to for SASI indexes.
+	 */
+	@Test
+	public void findByDerivedQueryMethodWithSASI() {
+
+		assumeTrue(CassandraVersion.getReleaseVersion(session).isGreaterThanOrEqualTo(CASSANDRA_3_4));
+
+		session.execute("CREATE CUSTOM INDEX ON users (lname) USING 'org.apache.cassandra.index.sasi.SASIIndex';");
+		repository.save(user);
+
+		assertThat(repository.findUsersByLastnameStartsWith("last"), hasItem(user));
 	}
 }

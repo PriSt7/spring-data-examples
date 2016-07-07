@@ -76,6 +76,10 @@ public class CassandraOperationsIntegrationTests {
 		assertThat(users.get(0), is(equalTo(user)));
 	}
 
+	/**
+	 * Objects can be inserted and updated using {@link CassandraTemplate}. What you {@code update} is what you
+	 * {@code select}.
+	 */
 	@Test
 	public void insertAndUpdate() {
 
@@ -88,10 +92,11 @@ public class CassandraOperationsIntegrationTests {
 		template.insert(user);
 
 		user.setFirstname(null);
+		template.update(user);
 
 		User loaded = template.selectOneById(User.class, 42L);
-		assertThat(user.getUsername(), is(equalTo("heisenberg")));
-		assertThat(user.getFirstname(), is(nullValue()));
+		assertThat(loaded.getUsername(), is(equalTo("heisenberg")));
+		assertThat(loaded.getFirstname(), is(nullValue()));
 	}
 
 	/**
@@ -146,6 +151,5 @@ public class CassandraOperationsIntegrationTests {
 		Map<String, Object> map = template.selectOne(QueryBuilder.select().from("users"), Map.class);
 		assertThat(map, hasEntry("user_id", user.getId()));
 		assertThat(map, hasEntry("fname", "Walter"));
-
 	}
 }
