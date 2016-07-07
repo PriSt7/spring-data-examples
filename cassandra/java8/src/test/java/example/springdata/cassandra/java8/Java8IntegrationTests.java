@@ -26,19 +26,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Integration test to show the usage of Java 8 features with Spring Data Cassandra.
  * 
  * @author Mark Paluch
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = CassandraConfiguration.class)
-@Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = CassandraConfiguration.class)
 public class Java8IntegrationTests {
 
 	@Autowired PersonRepository repository;
@@ -56,7 +53,7 @@ public class Java8IntegrationTests {
 		assertThat(repository.findOne(homer.id).isPresent(), is(true));
 		assertThat(repository.findOne(homer.id + 1), is(Optional.<Person> empty()));
 	}
-	
+
 	@Test
 	public void invokesDefaultMethod() {
 

@@ -19,12 +19,11 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Integration test showing the basic usage of {@link BasicUserRepository}.
@@ -33,9 +32,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Thomas Darimont
  * @author Christoph Strobl
  */
-@Ignore
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = BasicConfiguration.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = BasicConfiguration.class)
 public class BasicUserRepositoryTests {
 
 	@Autowired BasicUserRepository repository;
